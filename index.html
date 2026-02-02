@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine 💖</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      text-align: center;
+      position: relative;
+      animation: bgShimmer 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgShimmer {
+      0% { background: linear-gradient(135deg, #ff6b81, #ff3f6c); }
+      50% { background: linear-gradient(135deg, #ff84a2, #ff1e56); }
+      100% { background: linear-gradient(135deg, #ff6b81, #ff3f6c); }
+    }
+
+    .box {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      z-index: 2;
+      position: relative;
+      max-width: 90%;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+    }
+
+    button {
+      font-size: 1.1rem;
+      padding: 10px 25px;
+      margin: 10px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      position: absolute;
+      transition: all 0.3s ease;
+    }
+
+    .yes {
+      background: #ff1e56;
+      color: white;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 50px;
+      position: relative;
+    }
+
+    .no {
+      background: white;
+      color: #ff1e56;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      color: #ff2e63;
+      animation: float 3s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0% {transform: translateY(0) scale(1);}
+      50% {transform: translateY(-80px) scale(1.2);}
+      100% {transform: translateY(-160px) scale(1);}
+    }
+
+    .message {
+      font-size: 1.5rem;
+      margin-top: 20px;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      min-height: 120px;
+      line-height: 1.6;
+      white-space: pre-wrap; /* preserve spacing */
+    }
+  </style>
+</head>
+<body>
+  <div class="box" id="container">
+    <h1 id="question">Will you be my Valentine? 💖</h1>
+    <button class="yes" id="yesBtn" onclick="yesClicked()">Yes</button>
+    <button class="no" id="noBtn">No</button>
+    <div class="message" id="cuteMsg"></div>
+  </div>
+
+  <!-- Sound effect -->
+  <audio id="chime" src="https://freesound.org/data/previews/341/341695_3248244-lq.mp3"></audio>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const chime = document.getElementById('chime');
+    const cuteMsg = document.getElementById('cuteMsg');
+    const question = document.getElementById('question');
+
+    const messages = [
+      "Are you sure?",
+      "Try again 😏",
+      "Come on, say YES!",
+      "Nooo! 😜",
+      "Think twice!",
+      "Don't click me!",
+      "You can't escape!"
+    ];
+
+    function moveButton() {
+      const padding = 20;
+      const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+      const maxY = window.innerHeight - noBtn.offsetHeight - padding - 100; // leave space for YES button
+      const x = Math.random() * maxX + padding;
+      const y = Math.random() * maxY + padding;
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+
+      const msg = messages[Math.floor(Math.random() * messages.length)];
+      noBtn.innerText = msg;
+      chime.play();
+    }
+
+    noBtn.addEventListener('mouseenter', moveButton);
+    noBtn.addEventListener('touchstart', moveButton);
+
+    function yesClicked() {
+      alert("OMGGGGGG YOU SAID YESSSSSS!!!😭✨💗");
+
+      // Remove question and buttons
+      question.style.display = 'none';
+      yesBtn.style.display = 'none';
+      noBtn.style.display = 'none';
+
+      // Display heartfelt message
+      const fullMessage = "I’m so lucky to have you now! 🥹💗\nEvery moment with you makes me smile endlessly. You are my heart, my joy, my sunshine, and my everything. I loveee youuuu soooo fuckingg muchhhh 😍💖✨ I can’t wait for all our memories together and to make you the happiest person alive!";
+      typeMessage(fullMessage);
+      createHearts(40); // more hearts for extra fun
+    }
+
+    function typeMessage(msg) {
+      cuteMsg.style.opacity = 1;
+      cuteMsg.innerText = "";
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < msg.length) {
+          cuteMsg.innerText += msg[i];
+          i++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 60);
+    }
+
+    function createHearts(num) {
+      for (let i = 0; i < num; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerText = "💗";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.top = window.innerHeight + "px";
+        heart.style.fontSize = (15 + Math.random()*25) + "px";
+        heart.style.animationDuration = (2 + Math.random()*2) + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 3000);
+      }
+    }
+  </script>
+</body>
+</html>
