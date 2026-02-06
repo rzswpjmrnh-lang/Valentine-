@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Hey 👀</title>
+
+  <!-- Clean preview for Instagram / WhatsApp -->
+  <meta property="og:title" content="Hey 👀" />
+  <meta property="og:description" content="Just tap" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://picsum.photos/600/400" />
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: "Poppins", Arial, sans-serif;
+      background: linear-gradient(135deg, #ffe0ec, #fff5f9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      padding: 25px;
+      max-width: 500px;
+    }
+
+    h1 {
+      color: #c2185b;
+      margin-bottom: 25px;
+    }
+
+    button {
+      background: #e91e63;
+      color: white;
+      border: none;
+      padding: 14px 36px;
+      font-size: 18px;
+      border-radius: 40px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(233, 30, 99, 0.3);
+      transition: transform 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .text {
+      display: none;
+      margin-top: 25px;
+      font-size: 18px;
+      color: #880e4f;
+      line-height: 1.6;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 18px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0);
+        opacity: 0.7;
+      }
+      to {
+        transform: translateY(-110vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1 id="title">Tap when you need a smile 🤍</h1>
+
+    <button id="tapBtn">Tap</button>
+
+    <div class="text" id="displayText"></div>
+  </div>
+
+  <script>
+    const texts = [
+      "The way you exist so effortlessly and still make everything feel lighter.",
+      "How you make ordinary moments feel special without even trying.",
+      "How you feel like home in a way I didn’t know I needed.",
+      "I could keep going… but I’ll save the rest for when I’m with you 🤍"
+    ];
+
+    let index = 0;
+
+    const btn = document.getElementById("tapBtn");
+    const textBox = document.getElementById("displayText");
+    const title = document.getElementById("title");
+
+    btn.addEventListener("click", () => {
+      if (index === 0) {
+        title.style.display = "none";
+        textBox.style.display = "block";
+      }
+
+      textBox.innerHTML = texts[index];
+      index++;
+
+      if (index === texts.length) {
+        btn.style.display = "none";
+      }
+
+      createHeart();
+    });
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "🤍";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 4 + Math.random() * 3 + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 7000);
+    }
+  </script>
+</body>
+</html>
